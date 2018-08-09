@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{%block title%}Trees{% endblock %}
+{%block page_title %}
+    <h1 class = 'main_title'>Trees</h1><br />
+{% endblock %}
+
+{% block page_content %}
+    <h3>General Properties of Trees</h3>
+    <ul>
+      <li>Acyclic (non-cyclical) data structure</li>
+      <li> Edges are always directional</li>
+        <ul>
+          <li>Typically downwards</li>
+        </ul>
+      <li><b>Root</b></li>
+      <ul>
+        <li>The starting point in the data structure</li>
+        <li>Has no parent </li>
+      </ul>
+      <li> <b>Internal Nodes</b>     </li>
+        <ul>
+          <li>Nodes that have a parent and at least one child</li>
+          <li>Anything that is <i>not</i> the root or a leaf node</li>
+        </ul>
+      <li><b>Leaf Nodes</b></li>
+      <ul>
+        <li>Nodes without children</li>
+      </ul>
+    </ul>
+    <h3>Binary Trees</h3>
+    <ul>
+      <li>Trees where each node has at most two children (left &amp; right)</li>
+      <li>Common ways to search trees:  </li>
+      <ul>
+        <li><b>Breadth-first search (BFS)</b> or Level-order traversal</li>
+        <ul>
+          <li>Visit the current node, then its children, then all the children's children</li>
+          <li>Implement with a queue:</li>
+          <ul>
+            <li>Dequeue first node</li>
+            <li>Add children</li>
+            <li>Repeat until all nodes have been visited</li>
+          </ul>
+        </ul>
+        <img style="align-self:center;" width="300" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLx6MSZqm6Tqy0ITLzQjvdC78WKI86ir18PUjWmPlVGt_f1o77' />
+        <li><b>Depth-first search (DFS)</b></li>
+        <ul>
+          <li>  </li>
+          <li>  </li>
+          <li>  </li>
+          <li>  </li>
+        </ul>
+      </ul>
+    </ul>
+    <br />
+    <br />
+    <br />
+    <br />
+{% endblock %}

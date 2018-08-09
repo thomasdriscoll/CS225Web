@@ -1,0 +1,311 @@
+{% extends 'layout.html' %}
+{%block title%}C++{% endblock %}
+{%block style%}
+<link rel='stylesheetprefetch' type = 'text/css' href='/static/cpp_style.css'/>
+{% endblock %}
+{%block page_title %}
+    <h1 class = 'main_title'>Learning C++</h1><br />
+{% endblock %}
+
+{% block page_content %}
+
+    <h2>First Things First...</h2>
+    <a target = '_blank' href = 'http://www.learncpp.com/'>Learn C++</a>
+    <p>
+      Everything below is assumed to be a review. If you need in-depth explanations from professionals, I HIGHLY recommend this site. They have excellent examples
+      and detailed answers to everything you could ask.
+    </p>
+    <h3><u>Classes -> Lecture 2</u></h3>
+    <p>
+      What is object-oriented programming and how do classes fit in?<br />
+      "<b>Object-oriented programming (OOP) </b> provides us with the ability to create objects that tie together both properties and behaviors into a self-contained, reusable
+      variable." <b>Classes</b> are user-defined data types that have associated functions and member variables. <b>Objects</b> are instances of classes.
+      <h4>Access Modifiers</h4>
+      <ul>
+        <li><u>Public</u> - member functions or variables that can be accessed <i>outside</i> the object itself; when the user creates an object (instance of a class), these are the
+        attributes that the user can change in the program</li>
+        <li><u>Private</u> - member functions or variables that can only be accessed <i>inside</i> the object by itself and cannot be changed by the user; think of it as
+        the attributes the user shouldn't be allowed to change</li>
+        <li><u>Protected</u> - member functions/variables that the user cannot change but CAN be changed in derived classes (inheritance explained below)</li>
+      </ul>
+
+
+    </p>
+    <h3><u>Pointers and Stack Memory -> Lecture 3</u></h3>
+      <h4>Pointers</h4>
+        <p>
+          Three things to remember about pointers:
+          <br />
+          <ul>
+            <li>Pointers are a variable and a type; they have their own memory</li>
+            <li>Pointers store a memory address; they <i>point</i> to where data is in memory</li>
+            <li>Pointers may point to NULL (address of 0x0)</li>
+            </ul>
+    <h4>Stack Memory</h4>
+      <ul>
+        <li>Starts at very large values and grows down towards 0</li>
+          <ul>
+            <li><i>Intuition on why</i>: The memory size of computers vary but 0 is 0 everywhere, which makes it an easy stopping condition</li>
+          </ul>
+        <li>Memory is allocated first then data is written; data is always read up</li>
+        <li> Principle of <b>last in first out (LIFO)</b> - The last data/object placed on the stack is the first one to be removed</li>
+          <ul>
+            <li><b>PUSH</b> - Putting an object on the top of the stack</li>
+            <li><b>POP</b> - Removing an object off the top of the stack</li>
+            <li><i>Why stack memory?</i> Variables are allocated memory on a stack because, by <a target='_blank' href='https://www.youtube.com/watch?v=km4l8ZI-kQA'>starting from the bottom</a>, you can reuse memory from popped items as you grow up (POP = more free memory)</li>
+          </ul>
+        <li>All variables are by default stack memory</li>
+        <li>Stack memory stores local/function memory, which means it is super fast to access but also temporary and easily overwritten</li>
+      </ul>
+    <h4>Stack Frames</h4>
+      <ul>
+        <li>Created when any function myfunction is called</li>
+        <li>Stack frame is a pointer</li>
+        <li>It points to the first memory address that the function starts from (i.e. the largest memory address associated with the function then grows towards 0 as more variables are added)</li>
+        <li>Memory is marked as free’d when a function returns</li>
+        <li>Only MARKED as free, not deleted; the value still sits in the memory addy (known as garbage memory) but it can be reused</li>
+        <li>Garbage memory is also why you get rando values when you don’t initialize a variable properly</li>
+      </ul>
+    <h4>sizeof() operator</h4>
+      <ul>
+        <li>Gives the amount of space a value takes up in memory</li>
+        <li>A pointer takes up 8 Bytes</li>
+        <li><p class = 'code_font'> std::cout&lt;&lt;sizeof(int)&lt;&lt;std::endl;</p></li>
+      </ul>
+    <a style='color: blue;'target='_blank' href='https://www.hackerrank.com/challenges/c-tutorial-pointer/problem'>HackerRank Pointer Problem</a>
+
+
+   <br />
+   <br />
+    <h3><u>Heap (“allocated”) memory in C++ -> Lecture 4</u></h3>
+      <p>
+      <h4>Heap memory</h4>
+      “Variables allocated on the heap have their memory allocated at run time and accessing this memory is a bit slower, but the heap size is only limited by the size of virtual memory.
+      Element of the heap have no dependencies with each other and can always be accessed randomly at any time. You can allocate a block at any time and free it at any time.
+      This makes it much more complex to keep track of which parts of the heap are allocated or free at any given time.”<br />
+      Intuition: Note symmetry; “opposite” of stack memory<br />
+      <h4>Heap memory address</h4>
+      Starts at a low address; grows towards infinity
+      Symmetry
+      <h4>new/delete</h4>
+      The only way to create heap memory is with the use of the new keyword. Using new will:
+      <ol>
+        <li>Allocate heap memory</li>
+        <li>Call the object’s constructor (if not a primitive variable type)</li>
+        <li>Return a pointer to heap memory
+          <ul>
+            <li>This is why you always have a pointer of type Class to heap memory; light in memory, very elegant solution</li>
+          </ul></li>
+      </ol>
+      The only way to free heap memory is with the use of the delete keyword. Using delete will:
+      <ol>
+        <li>Call the object’s destructor</li>
+        <li>Mark the memory as free’d (again not actually deleted, only free’d)
+      </ol>
+Mark the memory as free’d (again not actually deleted, only free’d)<br />
+Memory is never automatically reclaimed, even if it goes out of scope. Memory lost but not free’d is “leaked memory”<br />
+When in doubt, valgrind that ish<br />
+ & = memory address (OR alias, depends on context)<br />
+* = initializes a pointer OR, outside of declaration, returns variable value pointer points to<br />
+int *ptr = &amp;variable;<br />
+ptr now points to variable; *ptr == variable …… ptr == &amp;variable<br />
+    </p>
+<h3><span style="font-weight: 400;"><u>Tradeoffs Between Values, Pointers, and References -> Lecture 5</u></span></h3>
+<br />
+<table border = '1'>
+  <tbody>
+    <tr>
+      <td>&nbsp;</td>
+      <td><p><span style="font-weight: 400;">By value</span></p></td>
+      <td><p><span style="font-weight: 400;">By pointer</span></p></td>
+      <td><p><span style="font-weight: 400;">By reference</span></p></td>
+    </tr>
+    <tr>
+      <td><p><span style="font-weight: 400;">When function is invoked, what is copied?</span></p></td>
+      <td><p><span style="font-weight: 400;">The entire object</span></p></td>
+      <td><p><span style="font-weight: 400;">Memory address (8 bytes)</span></p></td>
+      <td><p><span style="font-weight: 400;">Nothing! Alias is invoked</span></p></td>
+    </tr>
+    <tr>
+      <td><p><span style="font-weight: 400;">Does modifying the object in the </span><em><span style="font-weight: 400;">called</span></em><span style="font-weight: 400;"> function affect the object in the </span><em><span style="font-weight: 400;">caller</span></em><span style="font-weight: 400;"> function</span></p></td>
+      <td><p><span style="font-weight: 400;">No</span></p></td>
+      <td><p><span style="font-weight: 400;">Yes</span></p></td>
+      <td><p><span style="font-weight: 400;">Yes</span></p></td>
+    </tr>
+    <tr>
+      <td><p><span style="font-weight: 400;">Always a valid object passed in to the function</span></p></td>
+      <td><p><span style="font-weight: 400;">Yes</span></p></td>
+      <td><p><span style="font-weight: 400;">NO (null pointer)</span></p></td>
+      <td><p><span style="font-weight: 400;">Yes</span></p></td>
+    </tr>
+    <tr>
+      <td><p><span style="font-weight: 400;">Speed</span></p></td>
+      <td><p><span style="font-weight: 400;">Slow (think PNG copying)</span></p></td>
+      <td><p><span style="font-weight: 400;">Fast</span></p></td>
+      <td><p><span style="font-weight: 400;">Instantaneous</span></p></td>
+    </tr>
+    <tr>
+      <td><p><span style="font-weight: 400;">Safety (will you seg fault?)</span></p></td>
+      <td><p><span style="font-weight: 400;">Very safe</span></p></td>
+      <td><p><span style="font-weight: 400;">Dangerous!! (cuz pointers are hard to conceptualize)</span></p></td>
+      <td><p><span style="font-weight: 400;">Somewhat safe (you can still screw it up but that&rsquo;s on you)</span></p></td>
+    </tr>
+  </tbody>
+</table>
+  <br />
+  <br />
+  <!-- Rule of Three -->
+  <h3><span ><u>C++&rsquo;s &ldquo;Rule of Three&rdquo; -&gt; Not explicitly in lecture notes but most helpful is #7</u></span></h3>
+    <h4>Rule of Three: if you make any of the following, you will need to make all three*</h4>
+    <ul>
+      <li >Using example of class Sphere()</li>
+      <li>Examples show how they are declared in .h file </li>
+    </ul>
+    <ol>
+        <li ><b>Copy constructor</b> -&gt; Sphere(const Sphere &amp; other)</li>
+        <ol>
+          <li >Creates a new object with all the same properties as the passed object</li>
+        </ol>
+        <li ><b>Copy assignment operator</b>  &nbsp;&nbsp;&nbsp;-&gt; Sphere &amp; Sphere::operator = (const Sphere &amp;other)</li>
+        <ol>
+          <li >Overloads the = operator for the class</li>
+          <li >Takes a pre-exisiting object and rewrites its attributes to be the same as the passed object </li>
+          <li ><em><u>Often</u> (not always) utilizes the same code as the copy constructor</em></li>
+        </ol>
+        <li ><b>Destructor</b> -&gt; ~Sphere()</li>
+        <ol>
+          <li >Deallocates all heap memory associated with a struct, class, function, etc.</li>
+        </ol>
+    </ol>
+    <p><span >*Technically, you could only need the copy constructor and the copy assignment operator if your class only utilizes primitives and doesn&rsquo;t allocate memory beyond the pointer (i.e. the automatic destructor takes care of everything)</span></p>
+  <h3><u>Inheritance -> Lecture 8</u></h3>
+    <h4>Additional Reading</h4>
+      <p>Since this topic is so important and pretty dense, I attached additional reading. I HIGHLY recommend reading over these articles: </p>
+      <ul>
+        <li><a href='http://www.cplusplus.com/doc/tutorial/inheritance/' target='_blank'>Inheritance (ignore friendship)</a></li>
+        <li><a href='http://www.cplusplus.com/doc/tutorial/polymorphism/' target='_blank'>Polymorphism</a></li>
+      </ul>
+      <br />
+    <h4>Polymorphism/Inheritance</h4>
+      <ul>
+        <li>A single object may take on the type of any of its base types</li>
+        <li>Example: A Planet may polymorph itself to a Sphere</li>
+        <ul>
+          <li><p class = 'code_font'>Sphere * ptr = new Planet();</p></li>
+        </ul>
+        <li>But a Sphere cannot polymorph itself to a Planet</li>
+        <ul>
+          <li><p class='code_font'>Planet * ptr = new Sphere();  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//INVALID </p></li>
+        </ul>
+        <li>In C++, only variables/functions under public/protected are accessible, not private</li>
+        <ul>
+          <li>“When a class inherits another one, the members of the derived class can access the protected members inherited from the base class, but not its private member"</li>
+        </ul>
+      </ul>
+      <br />
+    <h4>Virtual Inheritance</h4>
+      <ul>
+        <li>Virtual member - a member function that can be redefined in a derived class without affecting other inherited properties. Default property</li>
+        <ul>
+          <li>“Non-virtual members can also be redefined in derived classes, but non-virtual members of derived classes cannot be accessed through a reference of the base class” (see example below)</li>
+          <li>Base class Sphere</li>
+          <ul>
+            <li><p class='code_font'>virtual Sphere::print() { cout &lt;&lt; “Sphere” &lt;&lt; endl;}</p></li>
+          </ul>
+          <li>Derived class Planet</li>
+          <ul>
+            <li><p class='code_font'>Planet::print() { cout &lt;&lt; “Planet” &lt;&lt; endl;}</p></li>
+            <li>Replaces the default property with unique property of class</li>
+          </ul>
+        </ul>
+        <li>Pure virtual member - does not have a definition (i.e. initialized to 0); most common implementation</li>
+        <ul>
+          <li><p>Example (for pure but also regular virtual) understanding: Take a base class like a polygon. All polygons have area but they’re all different. So, we create a pure virtual function area and set it to 0 in polygon. Each derived class of a polygon (Rectangle, Triangle, Hexagon, etc.) redefines area with its specific area formula. </p></li>
+        </ul>
+        <li><p>Abstract class - Classes that can only be used as base classes and thus are allowed to pure virtual functions </p></li>
+      </ul>
+    <h4>Pseudocode to Understand</h4>
+    <div class='code_font'>
+      <ul class = 'code_indent'>
+        <li>//Abstract class </li>
+        <li>class Polygon { </li>
+          <ul class='code_indent'>
+            <li>public:</li>
+            <ul class='code_indent'>
+              <li>virtual int area()  = 0; 	//This is defined in the .h file and this is proper notation for a pure virtual function</li>
+            </ul>
+          </ul>
+        <li>}</li>
+        <li>class Rect: public Polygon{</li>
+          <ul class='code_indent'>
+            <li>public:</li>
+            <ul class='code_indent'>
+              <li>virtual int area()  = 0;
+                <ul class='code_indent'>
+                  <li>return width * height;</li>
+                </ul>
+            </ul>
+          <li>}</li>
+          </ul>
+        <li>}</li>
+
+        Polygon * poly = new Rectangle(width=4, height=5);<br />
+        poly->area == 20;<br />
+        //But if we got rid of virtual in virtual int<br />
+        poly->area == 0;<br />
+      </ul>
+    </div>
+    <h3><u>Templates (Lecture #9)</u></h3>
+    <p><a href="http://www.cplusplus.com/doc/oldtutorial/templates/"><span style="font-weight: 400;">http://www.cplusplus.com/doc/oldtutorial/templates/</span></a></p>
+    <ul>
+      <li>Motivation:</li>
+      <ul>
+        <li>Allows programmer to construct generic code for multiple types without duplicating essentially the same code</li>
+        <li>Example: Suppose you want to compare two values of different types: char and int (assume overloaded operator for char) . If the function you send them to is templated, it can handle both</li>
+      </ul>
+      <li>Templated functions</li>
+      <ul>
+        <li>Format for declaring templated functions</li>
+        <li class='code_font'>template &lt;typename T&gt; function_declaration;</li>
+        <ul>
+          <li>Note: T is a convention for any identifier, you can call that ish whatever you want</li>
+        </ul>
+        <li>Example:</li>
+      </ul>
+    </ul>
+    <ul class='code_font' style='list-style-type: none;'>
+      <li>template &lt;typename T&gt;</li>
+      <li>T maximum (T a, T b){</li>
+        <ul class='code_indent'>
+          <li>T result;</li>
+          <li>result = (a &gt; b) ? a : b; //This equivalent to an if/else statement and is worth knowing
+          <li>return result;</p>
+        </ul>
+      <li>}</li>
+    </ul>
+      <ul>
+        <li style="font-weight: 400;"><span style="font-weight: 400;">Templated classes</span></li>
+        <ul>
+          <li style="font-weight: 400;"><span style="font-weight: 400;">Format for declaring templated functions</span></li>
+          <li style="font-weight: 400;"><span style="font-weight: 400;">template &lt;class T&gt; function_declaration;</span></li>
+          <li style="font-weight: 400;"><span style="font-weight: 400;">Example:</span></li>
+        </ul>
+      </ul>
+      <ul class='code_font code_indent'>
+        <li>template &lt;class T&gt;</li>
+        <li>class List {</li>
+        <ul class='code_indent'>
+          <li>public:</li>
+          <ul class='code_indent'>
+            <li>T maximum(T a, T b); //T does a lot </li>
+          </ul>
+        </ul>
+        <li>}</li>
+      </ul>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+{% endblock %}
