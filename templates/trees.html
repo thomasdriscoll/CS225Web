@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <h3>General Properties of Trees</h3>
+    <h3><u>General Properties of Trees</u></h3>
     <ul>
       <li>Acyclic (non-cyclical) data structure</li>
       <li> Edges are always directional</li>
@@ -26,34 +26,280 @@
       <ul>
         <li>Nodes without children</li>
       </ul>
+      <li>New data is added to the &#34;bottom&#34; of the data structure, i.e. making leaf nodes into internal nodes</li>
     </ul>
-    <h3>Binary Trees</h3>
+    <h3><u>Binary Trees</u></h3>
+    <h4>Definitions</h4>
     <ul>
-      <li>Trees where each node has at most two children (left &amp; right)</li>
-      <li>Common ways to search trees:  </li>
-      <ul>
-        <li><b>Breadth-first search (BFS)</b> or Level-order traversal</li>
+      <li>Informal</li>
         <ul>
-          <li>Visit the current node, then its children, then all the children's children</li>
-          <li>Implement with a queue:</li>
+          <li>Trees where each node has at most two children (left &amp; right)   </li>
+        </ul>
+      <li>Formal </li>
+        <ul>
+          <li>T = { }  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; where T is an empty tree</li>
+          <li>T = {d, T<sub>L</sub>, T<sub>R</sub>}</li>
           <ul>
-            <li>Dequeue first node</li>
-            <li>Add children</li>
-            <li>Repeat until all nodes have been visited</li>
+            <li><b>[INSERT PICTURE OF TREE AND EXAMPLE OF FORMAL DEFINTION]</b> </li>
           </ul>
         </ul>
-        <img style="align-self:center;" width="300" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLx6MSZqm6Tqy0ITLzQjvdC78WKI86ir18PUjWmPlVGt_f1o77' />
-        <li><b>Depth-first search (DFS)</b></li>
+    </ul>
+    <h4>Properties</h4>
+    <ul>
+      <li><b>Tree Height</b></li>
+      <ul>
+        <li>If T = { }, height(T) = -1</li>
+        <li>Otherwise: </li>
         <ul>
-          <li>  </li>
-          <li>  </li>
-          <li>  </li>
-          <li>  </li>
+          <li>height(T) = 1 + max(height(T<sub>L</sub>), height(T<sub>R</sub>))</li>
+        </ul>
+        <li>A different way to think of it: The longest path from the root to the node</li>
+      </ul>
+      <li><b>Full</b></li>
+      <ul>
+        <li>A tree where every node has either 0 or 2 children</li>
+        <li>A tree is full if and only if: </li>
+        <ul>
+          <li>F = { } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>or</b> </li>
+          <li>F = {d, T<sub>L</sub>, T<sub>R</sub>}</li>
+        </ul>
+      </ul>
+      <li><b>Perfect</b></li>
+      <ul>
+        <li>A tree where every node except the leaves have 2 children</li>
+        <li>Let P<sub>h</sub> be a perfect tree of height <i>h</i> and </li>
+        <ul>
+          <li>P<sub>-1</sub> = { }</li>
+          <li>P<sub>h</sub> = {d, P<sub>h-1</sub>, P<sub>h-1</sub>}</li>
+        </ul>
+      </ul>
+      <li><b>Complete</b></li>
+      <ul>
+        <li>This is easiest to understand conceptually: A complete tree is a perfect tree for ever level except the last,
+        where the last level is "pushed to the left"</li>
+        <li>A complete tree C of height <i>h</i>:</li>
+        <ul>
+          <li>C<sub>-1</sub> = { }</li>
+          <li>C<sub>h</sub> (where h > 0) = {r, T<sub>L</sub>, T<sub>R</sub>} where</li>
+          <ul>
+            <li>T<sub>L</sub> = C<sub>h-1</sub> and T<sub>R</sub> = P<sub>h-2</sub> <b>or</b></li>
+            <li>T<sub>L</sub> = P<sub>h-1</sub> and T<sub>R</sub> = C<sub>h-1</sub></li>
+          </ul>
         </ul>
       </ul>
     </ul>
-    <br />
-    <br />
-    <br />
-    <br />
+    <h3><u>Binary Search Trees (BST)</u></h3>
+    <h4>Properties of BSTs</h4>
+    <ul>
+      <li>Everything to the left of a node less than the node </li>
+      <li>Everything to the right of a node greater then or equal to the node</li>
+    </ul>
+    <h4>Formal Definition</h4>
+    <ul>
+      <li>T = { }  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; where T is an empty tree</li>
+      <li>T = {d, T<sub>L</sub>, T<sub>R</sub>}&nbsp;&nbsp;&nbsp;&nbsp; where &forall;x, x&isin; T<sub>L</sub>, x < d  </li>
+      <ul>
+        <li>T<sub>L</sub> is made up of elements less than d</li>
+        <li>T<sub>R</sub> is made up of elements greater than or equal to d</li>
+      </ul>
+    </ul>
+    <h4>Runtime Operations</h4>
+      <ul>
+        <li>Best case:  </li>
+        <ul>
+          <li><b>Insert</b></li>
+          <ul>
+            <li>O(h) + O(1) = O(h) where O(h) = O(1) </li>
+            <li><i>Type of tree: </i>A binary tree where there are <i>no</i> nodes</li>
+            <li><i>When does this happen?</i> Insertion of the root</li>
+            <li><i>Why the O(1)?</i> There's still a constant-time process of insertion!
+            </li>
+          </ul>
+          <li><b>Find/Remove</b></li>
+          <ul>
+            <li>O(h) + O(1) = O(h) where O(h) = O(1) </li>
+            <li><i>Type of tree: </i>A binary tree where there are <i>0 or 1</i> nodes</li>
+            <li><i>Runtime explanation:</i> If you have nothing or just one node, the process is only requires one iteration, so you're done!</li>
+            <li><i>Why the O(1)?</i> There's still a constant-time process for deletion <i>only</i>!
+          </ul>
+          <li><b>Traverse</b></li>
+          <ul>
+            <li><i>Runtime: </i>O(n)</li>
+            <li><i>Runtime explanation: </i> No matter what, to visit and get the data from every node, you <i>must</i> iterate through each node individually (in a binary tree)</li>
+          </ul>
+        </ul>
+        <li>Worst cases: </li>
+        <ul>
+          <li><b>Insert</b></li>
+          <ul>
+            <li>O(h) + O(1) = O(h) where O(h) = O(n) </li>
+            <li>Since inserts occur by adding a child to a leaf node, that operation will take the length of the tree. In the worst case, the tree might be
+            completely lopsided so that every node has only one child. </li>
+            <li><i>When does this happen?</i> When there exists an unbroken &#34;chain&#34; of nodes; <b>in this case, the binary tree is no different from a list</b></li>
+          </ul>
+          <li><b>Find/Remove</b></li>
+          <ul>
+            <li>O(h) + O(1) = O(h) where O(h) = O(n) </li>
+            <li><i>Type of tree: </i>A binary tree such that it is linked like a list </li>
+            <li><i>Runtime explanation:</i> If you have n nodes and the item you're looking to find/remove is the leaf, the process requires n iterations</li>
+            <li><i>Why the O(1)?</i> There's still a constant-time process for deletion <i>only</i>!
+          </ul>
+          <li><b>Traverse</b></li>
+          <ul>
+            <li><i>Runtime: </i>O(n)</li>
+            <li><i>Runtime explanation: </i> No matter what, to visit and get the data from every node, you <i>must</i> iterate through each node individually (in a binary tree)</li>
+          </ul>
+        </ul>
+        <li>Average case:  </li>
+        <ul>
+          <li><b>Insert</b></li>
+          <ul>
+            <li>O(h) + O(1) = O(h) where O(h) = O(lg(n)) </li>
+            <li>Typically, a binary tree grows at a rate of 2<sup>h</sup>, where a single root node has a h of 0</li>
+            <li><i>How is this true?</i> Each node has two children. And, as the tree grows, each of those children will, on average, have two children. So, each full level of the tree doubles
+            the total number of nodes in the tree. So: 2^(0+1) - 1 = 1, 2^(1+1)-1 = 3, 2^(2+1)-1 = 7, ..., 2<sup>h+1</sup>-1 = max # of nodes</li>
+            <li>However, we are able to traverse the tree, only going one level at a time, which is why we take lg(n)</li>
+            <li><i>But Thomas, why lg(n)? Couldn't it be in the middle of the tree?</i> Yup! But we're thinking average runtime here. And, as we just proved, <b>half</b>
+            of the nodes in the tree are in the bottom layer. So, in general, the runtime will be lg(n).</li>
+          </ul>
+          <li><b>Find/Remove</b></li>
+          <ul>
+            <li>O(h) + O(1) = O(h) where O(h) = O(lg(n)) </li>
+            <li><i>Type of tree: </i>A typical binary tree </li>
+            <li><i>Runtime explanation:</i> See insertion explanation for lg(n) runtime, as it applies to the find/remove runtimes as well</li>
+            <li><i>Why the O(1)?</i> There's still a constant-time process for deletion <i>only</i>!
+          </ul>
+          <li><b>Traverse</b></li>
+          <ul>
+            <li><i>Runtime: </i>O(n)</li>
+            <li><i>Runtime explanation: </i> No matter what, to visit and get the data from every node, you <i>must</i> iterate through each node individually (in a binary tree)</li>
+          </ul>
+        </ul>
+      </ul>
+      <h4>Common ways to traverse trees:</h4>
+        <ul>
+          <li><b>Breadth-first search (BFS)</b> or Level-order traversal</li>
+          <ul>
+            <li>Visit the current node, then its children, then all the children's children</li>
+            <li>Implementation with a queue:</li>
+            <ul>
+              <li>(1)Dequeue first node</li>
+              <li>(2)Add children</li>
+              <li>(3)Repeat until all nodes have been visited</li>
+            </ul>
+          </ul>
+          <img style="align-self:center;" width="300" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLx6MSZqm6Tqy0ITLzQjvdC78WKI86ir18PUjWmPlVGt_f1o77' />
+          <li><b>Depth-first search (DFS)</b></li>
+          <ul>
+            <li>Dive into the tree as quickly as possible (visit all leaves as soon as possible) </li>
+            <li>Types of DFS: </li>
+            <ul>
+              <img style="align-self:center;" width="300" src='https://www.andrew.cmu.edu/course/15-121/lectures/Trees/pix/binaryTree.bmp' />
+              <li><b>In-order Traversal</b> - Left subtree, Root, right subtree  </li>
+              <ul>
+                <li>&#123; &#123;&#123;D&#125;, B&#125;,  A, &#123;&#123;E&#125;, C, &#123;F&#125; &#125;&#125;</li>
+              </ul>
+              <li><b>Pre-order Traversal </b> - root, left subtree, right subtree </li>
+              <ul>
+                <li>&#123;A, &#123;B, &#123;D&#125; , &#123;C, &#123; &#123;E&#125;, &#123;F&#125; &#125; &#125;</li>
+              </ul>
+              <li><b>Post-order Traversal</b> - root, right subtree, left subtree </li>
+              <ul>
+                <li>&#123;A, &#123;C, &#123;F&#125;, &#123;E&#125; &#125; , &#123;B, &#123;D&#125;&#125; &#125;</li>
+              </ul>
+            </ul>
+            <li>Implementation with a stack:  [DOUBLE CHECK]</li>
+            <ul>
+              <li>(1)Push left child till leaf (i.e. until there's nothing left to push)  </li>
+              <li>(2)Pop top  </li>
+              <li>(3)Push right child of popped top of stack  (if it exists) and all left children of that right child until leaf</li>
+              <li>(4)Repeat until stack is empty  </li>
+            </ul>
+            <!-- <li></li> -->
+          </ul>
+        </ul>
+    <h3><u>AVL Trees</u></h3>
+    <h4>Balanced</h4>
+    <ul>
+      <li>A tree is balanced if the absolute value of the balance factor is less than or equal to 1 ; | b | &le; 1</li>
+      <li>b = height(T<sub>R</sub>) - height(T<sub>L</sub>)</li>
+      <li><b>AVL trees</b> - balanced BSTs</li>
+    </ul>
+    <h4>Why Make BSTs Balanced?</h4>
+    <ul>
+      <li><b>Purpose</b></li>
+      <ul>
+        <li>Balancing BSTs trees gives us some useful and interesting properties that allow us to further optimize runtime and expand our definite knowledge of
+        the tree.</li>
+      </ul>
+      <li><b>Knowledge Gained</b></li>
+      <ul>
+        <li>Runtimes</li>
+        <ul>
+          <li>Find/Insert/Delete <i>always</i> have runtimes of O(lg(n))</li>
+          <li><i>How can this be true?</i></li>
+          <ul>
+            <li>An AVL is tree is a balanced tree. The worst case is always the distance from the root to a leaf node. Because every point in the tree is balanced, all sides of the tree look "pretty" such
+            that the furthest point on the tree is only lg(n) away. </li>
+            <li>This is guaranteed by having a balance factor of 1&le; at every point in the tree. The balance factor means that you have an optimal tree and thus optimal decision making at each point
+            in the tree.</li>
+          </ul>
+        </ul>
+        <li>Number of nodes</li>
+        <ul>
+          <li>Maximum number of nodes = 2<sup>h+1</sup> - 1</li>
+          <ul>
+            <li>Conceptually </li>
+            <ul>
+              <li>There is the initial root node at 1. The root will have 2 children. And each of those
+                children will have 2 children, giving the root 4 grandchildren. Each of those 4 grandchildren will in turn have 2 children a piece, for a total of 8.
+                Notice that the number of children doubles for every layer of the tree.</li>
+              <li>Taking our current height, we can double that (the +1 in the exponent) to replicate the entire tree preceding it (since we know each layer is double the previous). However, this is off
+                by 1, so we subtract 1 to give the maximum number of nodes = 2<sup>h+1</sup>-1 </li>
+              <li>For those who remember their binary, this is similar!</li>
+            </ul>
+            <li>Induction</li>
+            <ul>
+              <li>Base Cases</li>
+              <ul>
+                <li>At h = 0, 2<sup>0</sup> = 1</li>
+                <li>At h = 1, 2<sup>0</sup> + 2<sup>1</sup> = 3</li>
+                <li>At h = 2, 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> = 7</li>
+              </ul>
+              <li>Induction</li>
+              <ul>
+                <li>2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + ... + 2<sup>h</sup> = 2<sup>h+1</sup> - 1</li>
+                <li>1 + 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + ... + 2<sup>h</sup> = 2<sup>h+1</sup></li>
+                <li>2<sup>0+1</sup> + 2<sup>1</sup> + 2<sup>2</sup> + ... + 2<sup>h</sup> = 2<sup>h+1</sup></li>
+                <li>2<sup>h+1</sup> = 2<sup>h+1</sup></li>
+              </ul>
+            </ul>
+          </ul>
+          <li>Minimum Number of nodes &ge; 2<sup>h/2</sup> for h &gt; 2</li>
+          <ul>
+            <li>Conceptually</li>
+            <ul>
+              <li>An AVL tree can have an absolute value of balance equal to 1. That balance of 1 can hold at every node. Think of the simple case
+              where its a single node with only one child. That same principle can hold throughout the whole tree such that the minimum number of nodes
+              is half (single child vs. two children)</li>
+            </ul>
+            <li>Induction</li>
+            <ul>
+              <li>(I'm going to try and find pictures to go along with this but might not be able to)</li>
+              <li>Base Cases</li>
+              <ul>
+                <li>At h = 1, 2 nodes</li>
+                <li>At h = 2, 4 nodes</li>
+                <li>At h = 3, 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> = 7</li>
+              </ul>
+            </ul>
+          </ul>
+        </ul>
+        <li></li>
+      </ul>
+    </ul>
+  <br />
+  <br />
+  <br />
+  <br />
 {% endblock %}
