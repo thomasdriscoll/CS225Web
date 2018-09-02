@@ -5,7 +5,95 @@
 {% endblock %}
 
 {% block page_content %}
-    <p class = 'intro_body'>
-      This -> is -> a -> fake -> list
+    <h2>What is a List?</h2>
+    <p>
+      A list is a data structure that, using pointers, can link objects together into
+      a single "chain". <br />
+      It is very similar to an array with some major key differences:
+      <ul>
+        <li>Can't access an element by its index</li>
+        <li>Don't have to allocate a definite amount of memory at creation</li>
+      </ul>
     </p>
+    <h3>Runtime Operations of a List</h3>
+    <ul>
+      <li><b>Traverse = O(n)</b></li>
+      <p>
+        In order to go from the head of the list to its tail, every node
+        along the list must be visited
+      </p>
+      <li><b>Find</b></li>
+      <p>
+        - Find is the base operation for everything else in linked list. All other
+        runtime operations are basically fancy manipulations of find.
+        Best case: O(1) <br />
+        - The desired node could be the head is instantaneous find <br />
+        Worst case: O(n) <br />
+        - The desired node could be the tail
+      </p>
+      <li><b>Insert</b></li>
+      Best case: Find position  + constant operations = O(1) + O(1) = O(1) <br />
+      - The new node could be a value that should be the root. So the find will be instantaneous
+      and the necessary manipulations are constant and so O(1) <br />
+      - OR, in an unordered list, items are added onto the beginning (as this O(1) runtime) <br />
+      Worst case: Find position + constant operations = O(n) + O(1) = O(n)<br />
+      - The new node could be a value that should be at the end of the list <br />
+      <li><b>Delete</b></li>
+      <p>
+        Best case: Find position  + constant operations = O(1) + O(1) = O(1) <br />
+        - The node to find could be the root. So the find will be instantaneous
+        and the necessary manipulations are constant and so O(1) <br />
+        Worst case: Find position + constant operations = O(n) + O(1) = O(n)<br />
+        - The node to find could be the tail <br />
+      </p>
+    </ul>
+    <h3>Table Summary</h3>
+    <table border='1' style='width: 100%'>
+      <tbody>
+        <tr>
+          <td><p><span style="font-weight: 400;">operation</span></p></td>
+<td>
+<p><span style="font-weight: 400;">Sorted Array</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span style="font-weight: 400;">find</span></p>
+</td>
+<td>
+<p><span style="font-weight: 400;">Binary search</span></p>
+<p><span style="font-weight: 400;">O(lg(n))</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span style="font-weight: 400;">insert</span></p>
+</td>
+<td>
+<p><span style="font-weight: 400;">Find + add element</span></p>
+<p><span style="font-weight: 400;">O(lg(n)) + O(n) = O(n)</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span style="font-weight: 400;">delete</span></p>
+</td>
+<td>
+<p><span style="font-weight: 400;">O(n)</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span style="font-weight: 400;">traverse</span></p>
+</td>
+<td>
+<p><span style="font-weight: 400;">O(n)</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br />
+<br />
+<br />
+<br />
 {% endblock %}
